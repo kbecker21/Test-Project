@@ -2,21 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
-  signupForm: FormGroup;
+  signinForm: FormGroup;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.signupForm = new FormGroup({
+    this.signinForm = new FormGroup({
       'userData': new FormGroup({
-        'firstname': new FormControl(null, [Validators.required]),
-        'lastname': new FormControl(null, [Validators.required]),
         'email': new FormControl(null, [Validators.required, Validators.email, Validators.pattern("^[A-Za-z0-9._%+-]+@iubh-fernstudium.de$")]),
         'password': new FormControl(null, [Validators.required])
       })
@@ -24,8 +22,10 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.signupForm);
-    //this.signupForm.reset();
+    console.log(this.signinForm);
+    //this.signinForm.reset();
   }
+
+
 
 }
