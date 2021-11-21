@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -9,8 +10,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class RegisterComponent implements OnInit {
 
   signupForm: FormGroup;
+  isSuccessful = false;
+  isSignUpFailed = false;
+  errorMessage = '';
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({
@@ -26,6 +30,19 @@ export class RegisterComponent implements OnInit {
   onSubmit() {
     console.log(this.signupForm);
     //this.signupForm.reset();
+
+    this.authService.register(this.signupForm['firstname'], this.signupForm['lastname'], this.signupForm['email'], this.signupForm['password']).subscribe(
+      data => {
+        console.log(data);
+        this.isSuccessful = true;
+        this.isSignUpFailed = false;
+      },
+      err => {
+        this.errorMessage = err.error.message;
+        this.isSignUpFailed = true;
+        console.log(this.errorMessage);
+      }
+    );
   }
 
 }
