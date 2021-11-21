@@ -1,0 +1,36 @@
+# Quiz
+
+Das Quiz ist unterteilt in Frontend sowie Backend. Für die Entwicklung werden Docker Container benutzt
+
+## Installation
+
+Download Docker 
+
+**Windows**: [Docker for Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows)
+
+## Usage
+
+Dieses Repository Klonen
+
+```git
+git clone <url>
+```
+
+Docker Images bauen
+
+
+```docker
+docker-compose build
+```
+
+Docker Images Starten
+```docker
+docker-compose up -d
+```
+
+## Links
+Frontend: [http://localhost:8089/](http://localhost:8089/)
+
+Backend: [http://localhost:8088/](http://localhost:8088/)
+
+PHPMyAdmin: [http://localhost:8087/](http://localhost:8087/)
