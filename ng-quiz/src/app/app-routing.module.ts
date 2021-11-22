@@ -5,6 +5,7 @@ import { FaqComponent } from './faq/faq.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { StatisticComponent } from './statistic/statistic.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'faq', component: FaqComponent },
+  { path: 'statistic', component: StatisticComponent },
   { path: 'not-found', component: ErrorPageComponent, data: { message: 'Page not found!' } },
   { path: '**', redirectTo: '/not-found' }
 ];
