@@ -17,6 +17,7 @@ import { LoginComponent } from './login/login.component';
 import { FaqComponent } from './faq/faq.component';
 import { StatisticComponent } from "./statistic/statistic.component";
 import { DataTableComponent } from './statistic/data-table/data-table.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 
@@ -43,7 +44,8 @@ import { DataTableComponent } from './statistic/data-table/data-table.component'
     BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

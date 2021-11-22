@@ -1,1 +1,22 @@
-<h1>faq import accordion faq</h1>
+<h1>Fragen und Antworten zum Online-Quiz educat.</h1>
+
+<mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Wer darf sich registrieren?
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>Alle Studenten der IU. Bei der Registrierung ist eine gültige Email-Adresse der IU notwendig.</p>
+    </mat-expansion-panel>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Wie kann ich mich registrieren?
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>Klicke im Menü auf
+            <a [routerLink]="['/register']" routerLinkActive="is-active">Sign up</a>
+        </p>
+    </mat-expansion-panel>
+</mat-accordion>
