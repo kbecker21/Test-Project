@@ -29,7 +29,6 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     console.log(this.signupForm);
-    //this.signupForm.reset();
 
     this.authService.register(this.signupForm['firstname'], this.signupForm['lastname'], this.signupForm['email'], this.signupForm['password']).subscribe(
       data => {
@@ -43,6 +42,8 @@ export class RegisterComponent implements OnInit {
         console.log(this.errorMessage);
       }
     );
+
+    //this.signupForm.reset();
   }
 
 }
