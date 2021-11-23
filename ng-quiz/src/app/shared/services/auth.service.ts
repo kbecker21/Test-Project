@@ -2,16 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const AUTH_API = "https://slack.com/api/auth.test";
+const AUTH_API = "https://gorest.co.in/public/v1/users";
 
 
 const httpOptions = {
   headers: new HttpHeaders(
     {
       'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      'Authorization': 'Bearer xoxe.xoxp-1-Mi0yLTI3NjYyNzIzNjkxNjktMjc1NTkwMzcyMjEwMC0yNzUzNjQ5NjM1MDI2LTI3NzczNjMxMDkyMTYtNDYxZmEwM2ViMDUyNTM4MGIwOTc5YWJhNGM2NTc1NTFmY2Q5NTYxMGZhZTVjNDAxYjQ5M2JkMmZjMTJhOTAyZg',
+      'Authorization': 'Bearer <<Token>>',
       'Content-Type': 'application/json'
-
     })
 };
 
@@ -38,12 +37,13 @@ export class AuthService {
   //   }, httpOptions);
   // }
 
+  /*Test Restschnittstelle gorest.co.in*/
   register(firstname: string, lastname: string, email: string, password: string): Observable<any> {
     return this.http.post(AUTH_API, {
-      firstname,
-      lastname,
-      email,
-      password
+      "name": "Test",
+      "gender": "male",
+      "email": "kevin@test.de",
+      "status": "active"
     }, httpOptions);
   }
 }
