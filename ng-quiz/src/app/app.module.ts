@@ -8,6 +8,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
+import { DataTableComponent } from './statistic/data-table/data-table.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -17,8 +19,8 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 import { LoginComponent } from './login/login.component';
 import { FaqComponent } from './faq/faq.component';
 import { StatisticComponent } from "./statistic/statistic.component";
-import { DataTableComponent } from './statistic/data-table/data-table.component';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { AccountComponent } from './account/account.component';
+
 
 
 
@@ -35,7 +37,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     LoginComponent,
     FaqComponent,
     StatisticComponent,
-    DataTableComponent
+    DataTableComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,

@@ -1,49 +1,41 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+import { User } from '../model/user.model';
+import { Router } from '@angular/router';
 
-const AUTH_API = "https://gorest.co.in/public/v1/users";
-
-
-const httpOptions = {
-  headers: new HttpHeaders(
-    {
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      'Authorization': 'Bearer <<Token>>',
-      'Content-Type': 'application/json'
-    })
-};
+export interface AuthResponseData {
+  kind: string;
+  idToken: string;
+  email: string;
+  refreshToken: string;
+  expiresIn: string;
+  localId: string;
+  registered?: boolean;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
+
+  user = new BehaviorSubject<User>(null);
   constructor(private http: HttpClient) { }
 
-  login(email: string, password: string): Observable<any> {
-    return this.http.post(AUTH_API + 'signin', {
-      email,
-      password
-    }, httpOptions);
+  signup(email: string, password: string) {
+    return this.http
+      .post<AuthResponseData>(
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API KEY]',
+        {
+          email: email,
+          password: password,
+          returnSecureToken: true
+        }
+      );
   }
 
-  // register(firstname: string, lastname: string, email: string, password: string): Observable<any> {
-  //   return this.http.post(AUTH_API + 'signup', {
-  //     firstname,
-  //     lastname,
-  //     email,
-  //     password
-  //   }, httpOptions);
-  // }
-
-  /*Test Restschnittstelle gorest.co.in*/
-  register(firstname: string, lastname: string, email: string, password: string): Observable<any> {
-    return this.http.post(AUTH_API, {
-      "name": "Test",
-      "gender": "male",
-      "email": "kevin@test.de",
-      "status": "active"
-    }, httpOptions);
+  login(email: string, password: string) {
   }
+
 }

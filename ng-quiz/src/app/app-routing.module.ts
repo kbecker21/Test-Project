@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AccountComponent } from './account/account.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { FaqComponent } from './faq/faq.component';
 import { HomeComponent } from './home/home.component';
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'statistic', component: StatisticComponent },
+  { path: 'account', component: AccountComponent },
   { path: 'not-found', component: ErrorPageComponent, data: { message: 'Page not found!' } },
   { path: '**', redirectTo: '/not-found' }
 ];

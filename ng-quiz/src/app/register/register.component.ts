@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../shared/services/auth.service';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthResponseData, AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +16,10 @@ export class RegisterComponent implements OnInit {
   isSignUpFailed = false;
   errorMessage = '';
 
-  constructor(private authService: AuthService) { }
+  isLoading = false;
+  error: string = null;
+
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({
@@ -22,28 +27,40 @@ export class RegisterComponent implements OnInit {
         'firstname': new FormControl(null, [Validators.required]),
         'lastname': new FormControl(null, [Validators.required]),
         'email': new FormControl(null, [Validators.required, Validators.email, Validators.pattern("^[A-Za-z0-9._%+-]+@iubh-fernstudium.de$")]),
-        'password': new FormControl(null, [Validators.required])
+        'password': new FormControl(null, [Validators.required, Validators.minLength(6)])
       })
     });
   }
 
   onSubmit() {
-    console.log(this.signupForm);
+    if (!this.signupForm.valid) {
+      return;
+    }
 
-    this.authService.register(this.signupForm['firstname'], this.signupForm['lastname'], this.signupForm['email'], this.signupForm['password']).subscribe(
-      data => {
-        console.log(data);
-        this.isSuccessful = true;
-        this.isSignUpFailed = false;
+    const email = this.signupForm.value.userData.email;
+    const password = this.signupForm.value.userData.password;
+
+    let authObs: Observable<AuthResponseData>;
+
+    this.isLoading = true;
+
+    authObs = this.authService.signup(email, password);
+
+    authObs.subscribe(
+      resData => {
+        console.log(resData);
+        this.isLoading = false;
+        this.router.navigate(['/account']);
       },
-      err => {
-        this.errorMessage = err.error.message;
-        this.isSignUpFailed = true;
-        console.log(this.errorMessage);
+      errorMessage => {
+        console.log(errorMessage);
+        this.error = errorMessage;
+        this.isLoading = false;
       }
     );
 
-    //this.signupForm.reset();
+    this.signupForm.reset();
+
   }
 
 }
