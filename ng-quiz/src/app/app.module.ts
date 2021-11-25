@@ -10,6 +10,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DataTableComponent } from './statistic/data-table/data-table.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -20,6 +22,7 @@ import { LoginComponent } from './login/login.component';
 import { FaqComponent } from './faq/faq.component';
 import { StatisticComponent } from "./statistic/statistic.component";
 import { AccountComponent } from './account/account.component';
+
 
 
 
@@ -50,7 +53,9 @@ import { AccountComponent } from './account/account.component';
     MatPaginatorModule,
     MatSortModule,
     MatExpansionModule,
-    MatTabsModule
+    MatTabsModule,
+    MatCardModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

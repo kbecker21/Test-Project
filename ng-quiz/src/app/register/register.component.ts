@@ -39,18 +39,20 @@ export class RegisterComponent implements OnInit {
 
     const email = this.signupForm.value.userData.email;
     const password = this.signupForm.value.userData.password;
+    const firstname = this.signupForm.value.userData.firstname;
+    const lastname = this.signupForm.value.userData.lastname;
 
     let authObs: Observable<AuthResponseData>;
 
     this.isLoading = true;
 
-    authObs = this.authService.signup(email, password);
+    authObs = this.authService.signup(email, password, firstname, lastname);
 
     authObs.subscribe(
       resData => {
         console.log(resData);
         this.isLoading = false;
-        this.router.navigate(['/account']);
+        this.router.navigate(['/home']);
       },
       errorMessage => {
         console.log(errorMessage);

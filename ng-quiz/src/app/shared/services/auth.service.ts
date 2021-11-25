@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../model/user.model';
-import { Router } from '@angular/router';
 
 export interface AuthResponseData {
   kind: string;
@@ -23,13 +22,15 @@ export class AuthService {
   user = new BehaviorSubject<User>(null);
   constructor(private http: HttpClient) { }
 
-  signup(email: string, password: string) {
+  signup(email: string, password: string, firstname: string, lastname: string) {
     return this.http
       .post<AuthResponseData>(
         'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API KEY]',
         {
           email: email,
           password: password,
+          firstname: firstname,
+          lastname: lastname,
           returnSecureToken: true
         }
       );
