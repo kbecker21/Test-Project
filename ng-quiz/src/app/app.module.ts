@@ -15,13 +15,12 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
-import { LoginComponent } from './login/login.component';
 import { FaqComponent } from './faq/faq.component';
 import { StatisticComponent } from "./statistic/statistic.component";
 import { AccountComponent } from './account/account.component';
+import { AuthComponent } from './auth/auth.component';
 
 
 
@@ -34,14 +33,13 @@ import { AccountComponent } from './account/account.component';
   declarations: [
     AppComponent,
     HeaderComponent,
-    RegisterComponent,
     HomeComponent,
     ErrorPageComponent,
-    LoginComponent,
     FaqComponent,
     StatisticComponent,
     DataTableComponent,
-    AccountComponent
+    AccountComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
