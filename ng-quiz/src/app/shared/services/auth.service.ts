@@ -14,15 +14,15 @@ export interface AuthResponseData {
   registered?: boolean;
 }
 
-const API_KEY = '';
+const API_KEY = 'AIzaSyAg09-AteulBxan5VoQrAzcAimd8IkvwCs';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-
   user = new BehaviorSubject<User>(null);
+
   constructor(private http: HttpClient) { }
 
   signup(email: string, password: string, firstname: string, lastname: string) {
@@ -37,7 +37,15 @@ export class AuthService {
           returnSecureToken: true
         }
       ).pipe(
-        catchError(this.handleError)
+        catchError(this.handleError),
+        tap(resData => {
+          this.handleAuthentication(
+            resData.email,
+            resData.localId,
+            resData.idToken,
+            +resData.expiresIn
+          );
+        })
       );
   }
 
@@ -49,9 +57,33 @@ export class AuthService {
           email: email,
           password: password
         }
+      ).pipe(
+        catchError(this.handleError),
+        tap(resData => {
+          this.handleAuthentication(
+            resData.email,
+            resData.localId,
+            resData.idToken,
+            +resData.expiresIn
+          );
+        })
       );
   }
 
+  private handleAuthentication(
+    email: string,
+    userId: string,
+    token: string,
+    expiresIn: number,
+    firstname?: string,
+    lastname?: string
+  ) {
+    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+    const user = new User(email, userId, token, expirationDate, firstname, lastname);
+    this.user.next(user);
+    //this.autoLogout(expiresIn * 1000);
+    //localStorage.setItem('userData', JSON.stringify(user));
+  }
 
   private handleError(errorRes: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
@@ -63,10 +95,10 @@ export class AuthService {
         errorMessage = 'This email exists already';
         break;
       case 'EMAIL_NOT_FOUND':
-        errorMessage = 'This email does not exist.';
+        errorMessage = 'This email or password is not correct.';
         break;
       case 'INVALID_PASSWORD':
-        errorMessage = 'This password is not correct.';
+        errorMessage = 'This email or password is not correct.';
         break;
     }
     return throwError(errorMessage);

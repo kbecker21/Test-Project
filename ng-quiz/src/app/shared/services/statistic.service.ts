@@ -12,7 +12,10 @@ export class StatisticService {
 
 
   getUsers() {
-    return this.http.get<any>('https://gorest.co.in/public/v1/posts');
+    return this.http
+      .get<any>(
+        'https://angular-cource-project-default-rtdb.europe-west1.firebasedatabase.app/'
+      );
   }
 
 }

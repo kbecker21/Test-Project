@@ -59,7 +59,13 @@ export class AuthComponent implements OnInit {
     authObs.subscribe(
       resData => {
         console.log(resData);
-        this.router.navigate(['/home']);
+
+        if (this.isLoginMode) {
+          this.router.navigate(['/account']);
+        } else {
+          this.router.navigate(['/login', { data: { isLoginMode: true } }]);
+        }
+
       },
       errorMessage => {
         console.log(errorMessage);
