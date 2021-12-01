@@ -8,17 +8,23 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
-import { DataTableComponent } from './statistic/data-table/data-table.component';
+import { DataTableComponent } from './ranking/data-table/data-table.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+// import { MatSidenavModule } from '@angular/material/sidenav';
+// import { MatIconModule } from '@angular/material/icon';
+// import { MatToolbarModule } from '@angular/material/toolbar';
+// import { MatListModule } from '@angular/material/list';
+
+// TODO: https://stackblitz.com/edit/material-sidenav-example?file=app%2Fsidenav-autosize-example.ts
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { FaqComponent } from './faq/faq.component';
-import { StatisticComponent } from "./statistic/statistic.component";
+import { RankingComponent } from "./ranking/ranking.component";
 import { AccountComponent } from './account/account.component';
 import { AuthComponent } from './auth/auth.component';
 
@@ -36,7 +42,7 @@ import { AuthComponent } from './auth/auth.component';
     HomeComponent,
     ErrorPageComponent,
     FaqComponent,
-    StatisticComponent,
+    RankingComponent,
     DataTableComponent,
     AccountComponent,
     AuthComponent

@@ -9,8 +9,9 @@
                     <ul class="nav navbar-nav">
                         <li routerLinkActive="active"><a routerLink="home">Home</a></li>
                         <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="quiz">Quiz</a></li>
-                        <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="qa">Q&A</a></li>
-                        <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="statistic">Statistic</a>
+                        <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="pool">Question Pool</a>
+                        </li>
+                        <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="ranking">Ranking</a>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -20,7 +21,7 @@
                                     class=""></span> Sign Up</a></li>
                         <li routerLinkActive="active" *ngIf="!isAuthenticated"><a routerLink="login"><span
                                     class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                        <li *ngIf="isAuthenticated"><a style="cursor: pointer;"><span
+                        <li *ngIf="isAuthenticated"><a style="cursor: pointer;" (click)="onLogout()"><span
                                     class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                         <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="account"><span
                                     class="glyphicon glyphicon-user"></span> Account</a></li>
