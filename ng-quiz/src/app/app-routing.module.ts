@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountComponent } from './account/account.component';
+import { AdminComponent } from './admin/admin.component';
 import { AuthComponent } from './auth/auth.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { FaqComponent } from './faq/faq.component';
 import { HomeComponent } from './home/home.component';
 import { RankingComponent } from './ranking/ranking.component';
+import { AuthGuard } from './shared/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -13,8 +15,9 @@ const routes: Routes = [
   { path: 'register', component: AuthComponent, data: { isLoginMode: false } },
   { path: 'login', component: AuthComponent, data: { isLoginMode: true } },
   { path: 'faq', component: FaqComponent },
-  { path: 'ranking', component: RankingComponent },
-  { path: 'account', component: AccountComponent },
+  { path: 'ranking', component: RankingComponent, canActivate: [AuthGuard] },
+  { path: 'account', component: AccountComponent, canActivate: [AuthGuard] },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
   { path: 'not-found', component: ErrorPageComponent, data: { message: 'Page not found!' } },
   { path: '**', redirectTo: '/not-found' }
 ];

@@ -13,16 +13,19 @@
                         </li>
                         <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="ranking">Ranking</a>
                         </li>
+                        <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="admin">User
+                                administration</a>
+                        </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li routerLinkActive="active"><a routerLink="faq"><span
                                     class="glyphicon glyphicon-question-sign"></span> FAQ</a></li>
-                        <li routerLinkActive="active" *ngIf="!isAuthenticated"><a routerLink="register"><span
-                                    class=""></span> Sign Up</a></li>
                         <li routerLinkActive="active" *ngIf="!isAuthenticated"><a routerLink="login"><span
                                     class="glyphicon glyphicon-log-in"></span> Login</a></li>
                         <li *ngIf="isAuthenticated"><a style="cursor: pointer;" (click)="onLogout()"><span
                                     class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        <li routerLinkActive="active" *ngIf="!isAuthenticated"><a routerLink="register"><span
+                                    class=""></span> Sign Up</a></li>
                         <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="account"><span
                                     class="glyphicon glyphicon-user"></span> Account</a></li>
                     </ul>

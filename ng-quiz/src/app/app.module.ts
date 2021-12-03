@@ -1,23 +1,17 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
-import { DataTableComponent } from './ranking/data-table/data-table.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-// import { MatSidenavModule } from '@angular/material/sidenav';
-// import { MatIconModule } from '@angular/material/icon';
-// import { MatToolbarModule } from '@angular/material/toolbar';
-// import { MatListModule } from '@angular/material/list';
 
-// TODO: https://stackblitz.com/edit/material-sidenav-example?file=app%2Fsidenav-autosize-example.ts
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -27,6 +21,7 @@ import { FaqComponent } from './faq/faq.component';
 import { RankingComponent } from "./ranking/ranking.component";
 import { AccountComponent } from './account/account.component';
 import { AuthComponent } from './auth/auth.component';
+import { AdminComponent } from './admin/admin.component';
 
 
 
@@ -43,9 +38,9 @@ import { AuthComponent } from './auth/auth.component';
     ErrorPageComponent,
     FaqComponent,
     RankingComponent,
-    DataTableComponent,
     AccountComponent,
-    AuthComponent
+    AuthComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

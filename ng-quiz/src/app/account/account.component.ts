@@ -10,6 +10,7 @@ import { AuthService } from '../shared/services/auth.service';
 export class AccountComponent implements OnInit {
 
   user: User;
+  isAdmin = true;
 
   constructor(private auth: AuthService) { }
 
