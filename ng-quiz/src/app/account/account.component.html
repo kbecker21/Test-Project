@@ -7,7 +7,7 @@
         <p> <span class="glyphicon glyphicon-envelope"></span> {{user.email}}</p>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-button>Edit Account</button>
-        <button mat-button>Delete Account</button>
+        <button mat-button (click)="onUpdateAccount()">Edit Account</button>
+        <button mat-button (click)="onDeleteAccount()">Delete Account</button>
     </mat-card-actions>
 </mat-card>
