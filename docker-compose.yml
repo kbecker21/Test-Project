@@ -29,7 +29,7 @@ services:
       SERVICE_NAME: mysql
     volumes:
       - ./docker/mysql:/docker-entrypoint-initdb.d
-      - ./docker/mysqldata:/var/lib/mysql
+
     networks:
       - isef
 

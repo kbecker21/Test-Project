@@ -31,8 +31,9 @@ export class UserService {
     );
   }
 
+
   getUsers() {
-    return this.http.get<any>('/api/user').pipe(
+    return this.http.get<any>('http://localhost:8000/user').pipe(
       catchError(this.handleError)
     );
   }
