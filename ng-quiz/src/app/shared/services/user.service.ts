@@ -1,15 +1,16 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { User } from '../model/user.model';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private auth: AuthService) { }
 
   private handleError(errorRes: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
@@ -31,10 +32,14 @@ export class UserService {
     );
   }
 
-  getUsers() {
-    return this.http.get<any>('/api/user').pipe(
-      catchError(this.handleError)
-    );
+
+  getUsers(currentUser: User) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': 'Bearer ' + currentUser.token
+    });
+    return this.http.get<any>('http://localhost:8000/user', { headers: headers })
   }
 
   updateUser(user: User) {
