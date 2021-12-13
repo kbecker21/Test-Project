@@ -29,7 +29,7 @@ services:
       SERVICE_NAME: mysql
     volumes:
       - ./docker/mysql:/docker-entrypoint-initdb.d
-      - ./docker/mysqldata:/var/lib/mysql
+      - my-datavolume:/var/lib/mysql
     networks:
       - isef
 
@@ -63,3 +63,6 @@ services:
 networks:
   isef:
     driver: bridge
+
+volumes:
+  my-datavolume:
