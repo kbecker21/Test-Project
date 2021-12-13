@@ -44,7 +44,14 @@ class Login extends ResourceController {
  
         $response = [
             'message' => 'Login Succesful',
-            'token' => $token
+            'token' => $token,
+            'Userdata' => [
+              'idUser' => $user['idUser'],
+              'FirstName' => $user['FirstName'],
+              'LastName' => $user['LastName'],
+              'Email' => $user['Email'],
+              'AccountLevel_idAccountLevel' => $user['AccountLevel_idAccountLevel'],    
+          ]
         ];
          
         return $this->respond($response, 200);
