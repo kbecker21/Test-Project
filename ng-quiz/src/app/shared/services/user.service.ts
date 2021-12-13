@@ -35,11 +35,12 @@ export class UserService {
 
   getUsers(currentUser: User) {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
       'Authorization': 'Bearer ' + currentUser.token
     });
-    return this.http.get<any>('http://localhost:8000/user', { headers: headers })
+    return this.http.get<any>('http://localhost:8000/user', { headers: headers }).pipe(
+      catchError(this.handleError)
+    );
   }
 
   updateUser(user: User) {
