@@ -54,7 +54,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(UserEditComponent, {
-      width: '250px',
+      width: '350px',
       data: { name: this.name, animal: this.animal },
     });
 
