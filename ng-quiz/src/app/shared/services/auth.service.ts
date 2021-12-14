@@ -26,10 +26,7 @@ export class AuthService {
         }
       )
       .pipe(
-        catchError(this.handleError),
-        tap(resData => {
-          console.log(resData);
-        })
+        catchError(this.handleError)
       );
   }
 
@@ -45,7 +42,6 @@ export class AuthService {
       .pipe(
         catchError(this.handleError),
         tap(resData => {
-          console.log(resData);
           this.handleAuthentication(
             resData.token,
             +resData.Userdata.idUser,

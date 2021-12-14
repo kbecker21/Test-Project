@@ -8,10 +8,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -22,11 +25,7 @@ import { RankingComponent } from "./ranking/ranking.component";
 import { AccountComponent } from './account/account.component';
 import { AuthComponent } from './auth/auth.component';
 import { AdminComponent } from './admin/admin.component';
-
-
-
-
-
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 
 
@@ -40,7 +39,8 @@ import { AdminComponent } from './admin/admin.component';
     RankingComponent,
     AccountComponent,
     AuthComponent,
-    AdminComponent
+    AdminComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,
@@ -51,10 +51,14 @@ import { AdminComponent } from './admin/admin.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatExpansionModule,
     MatTabsModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Edit User</h2>
+
+<!-- TODO: Add Form and submit.....wird nur ein Request wie bei der Anmeldung als Patch...-->
+<!-- TODO: Komponenten auch im admin nutzen. Damit kann jeder User sich selber editieren -->
+
+<div mat-dialog-content>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input matInput value="Kevin">
+    </mat-form-field>
+
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Save</button>
+</div>
