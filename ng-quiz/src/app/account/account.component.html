@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-title-group>
-        <mat-card-title>Foo Boo</mat-card-title>
-        <mat-card-subtitle>Student</mat-card-subtitle>
+        <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
+        <mat-card-subtitle>{{user.accountLevel | accountLevelPipe}}</mat-card-subtitle>
     </mat-card-title-group>
     <mat-card-content>
         <p> <span class="glyphicon glyphicon-envelope"></span> {{user.email}}</p>

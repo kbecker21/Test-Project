@@ -25,7 +25,7 @@ const USERS_DATA: Users[] = [
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['firstName', 'lastName', 'email', 'actions'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'email', 'accountLevel', 'actions'];
   dataSource = USERS_DATA;
 
   currentUser: User = null;

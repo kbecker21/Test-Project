@@ -26,6 +26,7 @@ import { AccountComponent } from './account/account.component';
 import { AuthComponent } from './auth/auth.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
+import { AccountLevelPipe } from './shared/pipe/account-level.pipe';
 
 
 
@@ -40,7 +41,8 @@ import { UserEditComponent } from './user-edit/user-edit.component';
     AccountComponent,
     AuthComponent,
     AdminComponent,
-    UserEditComponent
+    UserEditComponent,
+    AccountLevelPipe
   ],
   imports: [
     BrowserModule,
