@@ -20,4 +20,8 @@ export class User {
         return this.accountLevel === 5;
     }
 
+    public isTutor() {
+        return this.accountLevel === 4;
+    }
+
 }

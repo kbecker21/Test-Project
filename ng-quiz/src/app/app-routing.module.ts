@@ -9,6 +9,9 @@ import { HomeComponent } from './home/home.component';
 import { RankingComponent } from './ranking/ranking.component';
 import { AuthGuard } from './shared/auth.guard';
 
+const ADMIN = 5;
+const TUTOR = 4;
+
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
@@ -17,7 +20,7 @@ const routes: Routes = [
   { path: 'faq', component: FaqComponent },
   { path: 'ranking', component: RankingComponent, canActivate: [AuthGuard] },
   { path: 'account', component: AccountComponent, canActivate: [AuthGuard] },
-  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { role: 5 } },  // 5 = admin
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { role: ADMIN } },
   { path: 'not-found', component: ErrorPageComponent, data: { message: 'Page not found!' } },
   { path: '**', redirectTo: '/not-found' }
 ];
