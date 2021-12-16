@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'faq', component: FaqComponent },
   { path: 'ranking', component: RankingComponent, canActivate: [AuthGuard] },
   { path: 'account', component: AccountComponent, canActivate: [AuthGuard] },
-  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { role: 5 } },  // 5 = admin
   { path: 'not-found', component: ErrorPageComponent, data: { message: 'Page not found!' } },
   { path: '**', redirectTo: '/not-found' }
 ];

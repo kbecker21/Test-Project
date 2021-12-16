@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>Edit User</h2>
-<!-- TODO: Komponenten auch im admin nutzen. Damit kann jeder User sich selber editieren -->
+<!-- TODO: Komponenten auch im account nutzen. Damit kann jeder User sich selber editieren -->
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div formGroupName="userData">
         <div mat-dialog-content>
@@ -15,6 +15,8 @@
                 <mat-label>Email</mat-label>
                 <input matInput id="email" class="form-control" formControlName="email">
             </mat-form-field>
+
+            <!-- TODO: NUR ALS ADMIN darf man das Account Level bearbeiten -->
             <mat-form-field appearance="fill">
                 <mat-label>Account Level</mat-label>
                 <input matInput id="accountlevel" class="form-control" formControlName="accountlevel">

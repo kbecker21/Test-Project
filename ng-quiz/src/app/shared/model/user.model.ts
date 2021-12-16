@@ -16,4 +16,8 @@ export class User {
         return this._token;
     }
 
+    public isAdmin() {
+        return this.accountLevel === 5;
+    }
+
 }
