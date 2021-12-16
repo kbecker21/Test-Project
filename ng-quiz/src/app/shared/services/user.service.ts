@@ -33,10 +33,10 @@ export class UserService {
   }
 
 
-  getUsers(currentUser: User) {
+  getUsers(token: String) {
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
-      'Authorization': 'Bearer ' + currentUser.token
+      'Authorization': 'Bearer ' + token
     });
     return this.http.get<any>('http://localhost:8000/user', { headers: headers }).pipe(
       catchError(this.handleError)

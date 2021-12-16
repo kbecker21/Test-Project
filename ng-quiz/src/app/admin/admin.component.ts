@@ -31,8 +31,6 @@ export class AdminComponent implements OnInit, OnDestroy {
   currentUser: User = null;
   userSub: Subscription = null;
 
-  animal: string;
-  name: string;
 
   constructor(private auth: AuthService, private userService: UserService, public dialog: MatDialog) { }
 
@@ -44,7 +42,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   onGetUsers() {
-    this.userService.getUsers(this.currentUser).subscribe(response => {
+    this.userService.getUsers(this.currentUser.token).subscribe(response => {
       console.log(response);
     },
       errorMessage => {
@@ -55,12 +53,12 @@ export class AdminComponent implements OnInit, OnDestroy {
   openDialog(): void {
     const dialogRef = this.dialog.open(UserEditComponent, {
       width: '350px',
-      data: { name: this.name, animal: this.animal },
+      // TODO: Muss der aktuelle User aus der Liste eingetragen werden.....
+      data: { firstName: 'Test 1', lastName: 'Test L1', email: 'email@mail.de', accountLevel: 3 },
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.animal = result;
     });
   }
 
