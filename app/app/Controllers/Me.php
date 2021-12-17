@@ -55,20 +55,14 @@ class Me extends ResourceController {
 
         $model = new UserModel();
         $session = session();
-        
-        $data = $model->find($session->get('idUser'));
-        if($data){
-            $model->delete($session->get('idUser'));
-            $response = [
-                'status'   => 200,
-                'error'    => null,
-                'messages' => [
-                    'success' => 'User successfully deleted'
-                ]
-            ];
-            return $this->respondDeleted($response);
-        }else{
-            return $this->failNotFound('No User found');
-        }
+        $model->delete($session->get('idUser'));
+        $response = [
+            'status'   => 200,
+            'error'    => null,
+            'messages' => [
+                'success' => 'User successfully deleted'
+            ]
+        ];
+        return $this->respondDeleted($response);
     }
 }
