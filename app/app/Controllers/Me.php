@@ -12,42 +12,65 @@ class Me extends ResourceController {
      */
     use ResponseTrait;
     public function index() {
-        $key = getenv('JWT_SECRET');
-        $header = $this->request->getServer('HTTP_AUTHORIZATION');
-        $token = null;
- 
-        // extract the token from the header
-        if(!empty($header)) {
-            if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                $token = $matches[1];
-            }
-        }
- 
-        // check if token is null or empty
-        if(is_null($token) || empty($token)) {
-            $response = service('response');
-            $response->setBody('Access denied');
-            $response->setStatusCode(401);
-            return $response;
-        }
- 
-        try {
-            $decoded = JWT::decode($token, $key, array("HS256"));
-            $response = [
-                'id' => $decoded->idUser,
-                'email' => $decoded->email,
-                'AccountLevel' => $decoded->AccountLevel
-            ];
-            return $this->respond($response);
+        
+      $model = new UserModel();
+      $session = session();
 
-        } catch (Exception $ex) {
-            $response = service('response');
-            $response->setBody('Access denied');
-            $response->setStatusCode(401);
-            return $response;
+      $data = $model->find($session->get('idUser'));
 
-        }
+      return $this->respond($data);
 
     }
- 
+
+    // update
+    public function update($id = null){
+
+        $model = new UserModel();
+        $session = session();
+       
+        $data = [
+            'FirstName' => $this->request->getVar('firstname'),
+            'LastName' => $this->request->getVar('lastname'),
+            'Email'  => $this->request->getVar('email'),
+            'Password'  => $this->request->getVar('password'),
+            'Status'  => 0,
+            'AccountLevel_idAccountLevel'  => 3,
+            'Lastupdated'  => date("Y-m-d H:i:s")
+        ];
+
+        $model->update($session->get('idUser'), $data);
+
+        $response = [
+          'status'   => 200,
+          'error'    => null,
+          'messages' => [
+              'success' => 'Information updated successfully'
+          ]
+      ];
+      return $this->respond($response);
+    }
+
+   
+
+    // delete 
+    public function delete($id = null){
+
+        $model = new UserModel();
+        $session = session();
+        
+        $data = $model->find($session->get('idUser'));
+        if($data){
+            $model->delete($session->get('idUser'));
+            $response = [
+                'status'   => 200,
+                'error'    => null,
+                'messages' => [
+                    'success' => 'User successfully deleted'
+                ]
+            ];
+            return $this->respondDeleted($response);
+        }else{
+            return $this->failNotFound('No User found');
+        }
+    }
 }
