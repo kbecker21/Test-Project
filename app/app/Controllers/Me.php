@@ -33,8 +33,6 @@ class Me extends ResourceController {
             'LastName' => $this->request->getVar('lastname'),
             'Email'  => $this->request->getVar('email'),
             'Password'  => $this->request->getVar('password'),
-            'Status'  => 0,
-            'AccountLevel_idAccountLevel'  => 3,
             'Lastupdated'  => date("Y-m-d H:i:s")
         ];
 
