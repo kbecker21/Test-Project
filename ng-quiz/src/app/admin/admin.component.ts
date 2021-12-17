@@ -34,7 +34,9 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   constructor(private auth: AuthService, private userService: UserService, public dialog: MatDialog) { }
 
-
+  /**
+   * Initialisiert den aktuellen Benutzer.
+   */
   ngOnInit(): void {
     this.userSub = this.auth.user.subscribe(user => {
       this.currentUser = user;

@@ -15,6 +15,12 @@ import { AuthService } from './services/auth.service';
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) { }
 
+  /**
+   * Prüft ob der Nutzer diese Route nutzen darf.
+   * @param route ActivatedRouteSnapshot
+   * @param router RouterStateSnapshot
+   * @returns true: wenn Nutzer diese Route benutzen darf; false: wenn nicht
+   */
   canActivate(
     route: ActivatedRouteSnapshot,
     router: RouterStateSnapshot

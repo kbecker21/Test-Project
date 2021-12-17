@@ -11,13 +11,22 @@ import { UserEditComponent } from '../user-edit/user-edit.component';
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
+
+/**
+ * Diese Komponente implementiert die aktuelle Nutzeransicht.
+ */
 export class AccountComponent implements OnInit {
 
   user: User;
   isAdmin = true;
 
+  // TODO: save and destroy all subscribtions
+
   constructor(private auth: AuthService, private userService: UserService, private router: Router, public dialog: MatDialog) { }
 
+  /**
+   * Initialisiert den aktuellen Benutzer.
+   */
   ngOnInit(): void {
     this.auth.user.subscribe(user => {
       this.user = user;
@@ -27,7 +36,9 @@ export class AccountComponent implements OnInit {
       })
   }
 
-
+  /**
+   * Öffnet ein Dialogfenster mit den aktuellen Nutzerdaten.
+   */
   openDialog(): void {
     const dialogRef = this.dialog.open(UserEditComponent, {
       width: '350px',
@@ -39,17 +50,24 @@ export class AccountComponent implements OnInit {
     });
   }
 
-
+  /**
+   * Nach der Bestätigung wird der Nutzer gelöscht, ausgeloggt und auf die Startseite navigiert.
+   */
   onDeleteAccount() {
-    let userId = 1;
+    if (confirm('Möchtest du sicher den Account löschen?')) {
+      this.userService.deleteUser(this.user).subscribe(response => {
+        console.log(response);
+        this.auth.logout();
+        this.router.navigate(['/home']);
+      },
+        errorMessage => {
+          console.log(errorMessage);
+        });
+    }
 
-    this.userService.deleteAccount(userId).subscribe(response => {
-      console.log(response);
-      this.router.navigate(['/home']);
-    },
-      errorMessage => {
-        console.log(errorMessage);
-      });
   }
+
+
+
 
 }

@@ -1,9 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { User } from '../shared/model/user.model';
 import { AuthService } from '../shared/services/auth.service';
+import { UserService } from '../shared/services/user.service';
 
 
 //outsourcen
@@ -29,12 +31,14 @@ export class UserEditComponent implements OnInit, OnDestroy {
   constructor(
     public dialogRef: MatDialogRef<UserEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private auth: AuthService
+    private auth: AuthService, private userService: UserService
   ) { }
 
 
+  /**
+  * Initialisiert den aktuellen Benutzer.
+  */
   ngOnInit(): void {
-
     this.userSub = this.auth.user.subscribe(user => {
       this.currentUser = user;
     });
@@ -56,6 +60,10 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     console.log("submit");
+
+    this.userService.updateUser(this.currentUser).subscribe(response => {
+      console.log(response);
+    });
   }
 
 
