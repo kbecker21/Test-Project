@@ -13,7 +13,7 @@
                         </li>
                         <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="ranking">Ranking</a>
                         </li>
-                        <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="admin">User
+                        <li routerLinkActive="active" *ngIf="isAuthenticated && isAdmin"><a routerLink="admin">User
                                 administration</a>
                         </li>
                     </ul>

@@ -15,6 +15,12 @@ import { AuthService } from './services/auth.service';
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) { }
 
+  /**
+   * Prüft ob der Nutzer diese Route nutzen darf.
+   * @param route ActivatedRouteSnapshot
+   * @param router RouterStateSnapshot
+   * @returns true: wenn Nutzer diese Route benutzen darf; false: wenn nicht
+   */
   canActivate(
     route: ActivatedRouteSnapshot,
     router: RouterStateSnapshot
@@ -27,16 +33,19 @@ export class AuthGuard implements CanActivate {
       take(1),
       map(user => {
         const isAuth = !!user;
+
+        const userRole = user.accountLevel;
+
+        if (route.data.role && route.data.role != userRole) {
+          return false;
+        }
+
         if (isAuth) {
           return true;
         }
+
         return this.router.createUrlTree(['/login']);
       })
-      // tap(isAuth => {
-      //   if (!isAuth) {
-      //     this.router.navigate(['/login']);
-      //   }
-      // })
     );
   }
 }

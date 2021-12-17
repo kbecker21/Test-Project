@@ -26,10 +26,7 @@ export class AuthService {
         }
       )
       .pipe(
-        catchError(this.handleError),
-        tap(resData => {
-          console.log(resData);
-        })
+        catchError(this.handleError)
       );
   }
 
@@ -45,10 +42,13 @@ export class AuthService {
       .pipe(
         catchError(this.handleError),
         tap(resData => {
-          console.log(resData);
           this.handleAuthentication(
-            email,
             resData.token,
+            +resData.Userdata.idUser,
+            resData.Userdata.FirstName,
+            resData.Userdata.LastName,
+            resData.Userdata.Email,
+            +resData.Userdata.AccountLevel_idAccountLevel
           );
         })
       );
@@ -56,17 +56,24 @@ export class AuthService {
 
   autoLogin() {
     const userData: {
-      email: string;
-      id: string;
-      _token: string;
-      _tokenExpirationDate: string;
+      idUser: number,
+      firstName: string,
+      lastName: string,
+      email: string,
+      accountLevel: number,
+      _token: string,
+      _tokenExpirationDate: Date
     } = JSON.parse(localStorage.getItem('userData'));
     if (!userData) {
       return;
     }
 
     const loadedUser = new User(
+      userData.idUser,
+      userData.firstName,
+      userData.lastName,
       userData.email,
+      userData.accountLevel,
       userData._token,
       new Date(userData._tokenExpirationDate)
     );
@@ -97,12 +104,16 @@ export class AuthService {
   }
 
   private handleAuthentication(
-    email: string,
     token: string,
+    idUser: number,
+    firstName: string,
+    lastName: string,
+    email: string,
+    accountLevel: number
   ) {
     const expiresIn = 3600;
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-    const user = new User(email, token, expirationDate);
+    const user = new User(idUser, firstName, lastName, email, accountLevel, token, expirationDate);
     this.user.next(user);
     this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user));

@@ -5,9 +5,16 @@ import { catchError } from 'rxjs/operators';
 import { User } from '../model/user.model';
 import { AuthService } from './auth.service';
 
+// TODO: Bei Integration anpassen
+const URL = 'http://localhost:8000';
+
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+ * Der Service stellt alle nötigen HTTP-Funktionen zum Abrufen, Bearbeiten und Löschen von Benutzern bereit.
+ */
 export class UserService {
 
   constructor(private http: HttpClient, private auth: AuthService) { }
@@ -25,39 +32,58 @@ export class UserService {
     return throwError(errorMessage);
   }
 
-
   getUser(userId: number) {
-    return this.http.get<any>('/api/user/' + userId).pipe(
+    return this.http.get<any>(URL + '/user/' + userId).pipe(
       catchError(this.handleError)
     );
   }
 
-
-  getUsers(currentUser: User) {
+  /**
+   * Ermittelt aller Nutzer im System.
+   * @param token Der Token vom aktuellen Nutzer.
+   * @returns alle Nutzer aus dem System
+   */
+  getUsers(token: String) {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Authorization': 'Bearer ' + currentUser.token
+      'Authorization': 'Bearer ' + token
     });
-    return this.http.get<any>('http://localhost:8000/user', { headers: headers })
+    return this.http.get<any>(URL + '/user', { headers: headers }).pipe(
+      catchError(this.handleError)
+    );
   }
 
+  /**
+   * Aktualisiert einen Benutzer.
+   * @param user Der Benutzer der aktualisiert werden soll.
+   * @returns xxxxxxxxx
+   */
   updateUser(user: User) {
-    let userId = 1;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + user.token
+    });
     return this.http.put<any>(
-      '/api/user/' + userId,
+      URL + '/user/' + user.idUser,
       {
+        firstname: user.firstName,
+        lastname: user.lastName,
         email: user.email,
-        firstname: "foo2",
-        lastname: "boo2"
-      }
+        accountLevel: user.accountLevel
+      }, { headers: headers }
     ).pipe(
       catchError(this.handleError)
     );
   }
 
-  deleteAccount(userId: number) {
-    return this.http.delete<any>('/api/user/' + userId).pipe(
+  /**
+   * Löscht einen Benutzer.
+   * @param user Der Benutzer der gelöscht werden soll.
+   * @returns xxxxxxxxx
+   */
+  deleteUser(user: User) {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + user.token
+    });
+    return this.http.delete<any>(URL + '/user/' + user.idUser, { headers: headers }).pipe(
       catchError(this.handleError)
     );
   }
