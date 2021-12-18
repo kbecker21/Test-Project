@@ -21,6 +21,10 @@ export interface DialogData {
   templateUrl: './user-edit.component.html',
   styleUrls: ['./user-edit.component.css']
 })
+
+/**
+ * Diese Komponente implementiert das Benutzer Formular. 
+ */
 export class UserEditComponent implements OnInit, OnDestroy {
   form: FormGroup;
 
@@ -37,6 +41,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
   /**
   * Initialisiert den aktuellen Benutzer.
+  * Initialisiert das Formular.
   */
   ngOnInit(): void {
     this.userSub = this.auth.user.subscribe(user => {
@@ -54,10 +59,16 @@ export class UserEditComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Abrechen der Eingabe. Schließt den Dialog.
+   */
   onCancel(): void {
     this.dialogRef.close();
   }
 
+  /**
+   * Sendet Daten an Service.
+   */
   onSubmit(): void {
     console.log("submit");
 
@@ -66,7 +77,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
     });
   }
 
-
+  /**
+  * Beendet alle Subscriptions.
+  */
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
   }

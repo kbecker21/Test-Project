@@ -24,27 +24,31 @@ const USERS_DATA: Users[] = [
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
+
+/**
+ *  Diese Komponente implementiert die Benutzerverwaltung.
+ */
 export class AdminComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['firstName', 'lastName', 'email', 'accountLevel', 'actions'];
   dataSource = USERS_DATA;
 
   currentUser: User = null;
   userSub: Subscription = null;
+  allUsers: Subscription = null;
 
 
   constructor(private auth: AuthService, private userService: UserService, public dialog: MatDialog) { }
 
   /**
    * Initialisiert den aktuellen Benutzer.
+   * Initialisiert die Benutzerverwaltungs-Tabelle.
    */
   ngOnInit(): void {
     this.userSub = this.auth.user.subscribe(user => {
       this.currentUser = user;
     });
-  }
 
-  onGetUsers() {
-    this.userService.getUsers(this.currentUser.token).subscribe(response => {
+    this.allUsers = this.userService.getUsers(this.currentUser.token).subscribe(response => {
       console.log(response);
     },
       errorMessage => {
@@ -52,21 +56,24 @@ export class AdminComponent implements OnInit, OnDestroy {
       });
   }
 
+
+  /**
+  * Öffnet ein Dialogfenster mit den aktuellen Nutzerdaten.
+  */
   openDialog(): void {
     const dialogRef = this.dialog.open(UserEditComponent, {
       width: '350px',
       // TODO: Muss der aktuelle User aus der Liste eingetragen werden.....
       data: { firstName: 'Test 1', lastName: 'Test L1', email: 'email@mail.de', accountLevel: 3 },
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
   }
 
-
+  /**
+    * Beendet alle Subscriptions.
+    */
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
+    this.allUsers.unsubscribe();
   }
 
 

@@ -12,26 +12,16 @@ const URL = 'http://localhost:8000';
   providedIn: 'root'
 })
 
+
 /**
+ * Diese Komponente implementiert den UserService. 
  * Der Service stellt alle nötigen HTTP-Funktionen zum Abrufen, Bearbeiten und Löschen von Benutzern bereit.
  */
 export class UserService {
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
-  private handleError(errorRes: HttpErrorResponse) {
-    let errorMessage = 'An unknown error occurred!';
-    if (!errorRes.error || !errorRes.error.error) {
-      return throwError(errorMessage);
-    }
-    switch (errorRes.error.error.message) {
-      case 'Foo':
-        errorMessage = 'Foo';
-        break;
-    }
-    return throwError(errorMessage);
-  }
-
+  // TODO: erst fertigstellen bevor Kommentar.
   getUser(userId: number) {
     return this.http.get<any>(URL + '/user/' + userId).pipe(
       catchError(this.handleError)
@@ -86,5 +76,24 @@ export class UserService {
     return this.http.delete<any>(URL + '/user/' + user.idUser, { headers: headers }).pipe(
       catchError(this.handleError)
     );
+  }
+
+
+  /**
+   * Behandelt Fehlermeldungen
+   * @param errorRes Error
+   * @returns xxxxxxxxx
+   */
+  private handleError(errorRes: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred!';
+    if (!errorRes.error || !errorRes.error.error) {
+      return throwError(errorMessage);
+    }
+    switch (errorRes.error.error.message) {
+      case 'Foo':
+        errorMessage = 'Foo';
+        break;
+    }
+    return throwError(errorMessage);
   }
 }

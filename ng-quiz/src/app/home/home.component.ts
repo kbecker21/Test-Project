@@ -6,18 +6,16 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+
+/**
+ * Diese Komponente implementiert die Startseite.
+ */
+export class HomeComponent {
   name = 'Angular 6';
   safeSrc: SafeResourceUrl;
 
   constructor(private sanitizer: DomSanitizer) {
     this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/HtmKZdyrV4E");
   }
-
-
-  ngOnInit(): void {
-  }
-
-
 
 }

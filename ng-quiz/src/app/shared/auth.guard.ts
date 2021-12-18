@@ -12,6 +12,9 @@ import { map, take } from 'rxjs/operators';
 import { AuthService } from './services/auth.service';
 
 @Injectable({ providedIn: 'root' })
+/**
+ * Diese Komponente implementiert den AuthGuard. 
+ */
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) { }
 

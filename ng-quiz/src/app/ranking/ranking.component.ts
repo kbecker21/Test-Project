@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './ranking.component.html',
   styleUrls: ['./ranking.component.css']
 })
+
+/**
+ * Diese Komponente implementiert die Rangliste.
+ */
 export class RankingComponent implements OnInit {
 
 

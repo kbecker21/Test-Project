@@ -6,14 +6,25 @@ import { throwError, BehaviorSubject } from 'rxjs';
 
 import { User } from '../model/user.model';
 
-
 @Injectable({ providedIn: 'root' })
+
+/**
+ * Diese Komponente implementiert den Auth Service.
+ */
 export class AuthService {
   user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
   constructor(private http: HttpClient, private router: Router) { }
 
+  /**
+   * Registiert einen Benutzer.
+   * @param firstname Vorname
+   * @param lastname Nachname
+   * @param email E-Mail
+   * @param password Passwort
+   * @returns xxxxxxxxxxx
+   */
   signup(firstname: string, lastname: string, email: string, password: string) {
     return this.http
       .post<any>(
@@ -30,6 +41,12 @@ export class AuthService {
       );
   }
 
+  /**
+   * Meldet einen Benutzer an.
+   * @param email E-Mail
+   * @param password Passwort
+   * @returns xxxxxxxxx
+   */
   login(email: string, password: string) {
     return this.http
       .post<any>(
@@ -54,6 +71,10 @@ export class AuthService {
       );
   }
 
+  /**
+   * Aktualisiert den Login.
+   * @returns xxxxxxxxxx
+   */
   autoLogin() {
     const userData: {
       idUser: number,
@@ -87,6 +108,11 @@ export class AuthService {
     }
   }
 
+  /**
+ * Meldet den Benutzer ab.
+ * Löscht gespeicherte Daten.
+ * Navigiert auf Anmeldung.
+ */
   logout() {
     this.user.next(null);
     this.router.navigate(['/login']);
@@ -97,12 +123,25 @@ export class AuthService {
     this.tokenExpirationTimer = null;
   }
 
+  /**
+   * Meldet den Benutzer ab, wenn die Zeit abgelaufen ist.
+   * @param expirationDuration 
+   */
   autoLogout(expirationDuration: number) {
     this.tokenExpirationTimer = setTimeout(() => {
       this.logout();
     }, expirationDuration);
   }
 
+  /**
+   * Speichert Login
+   * @param token Token
+   * @param idUser User ID
+   * @param firstName Vorname
+   * @param lastName Nachname
+   * @param email E-Mail
+   * @param accountLevel Account Level 
+   */
   private handleAuthentication(
     token: string,
     idUser: number,
@@ -119,6 +158,11 @@ export class AuthService {
     localStorage.setItem('userData', JSON.stringify(user));
   }
 
+  /**
+   * Behandelt Fehlermeldungen
+   * @param errorRes Error
+   * @returns xxxxxxx
+   */
   private handleError(errorRes: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
     return throwError(errorMessage);

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { User } from '../shared/model/user.model';
 import { AuthService } from '../shared/services/auth.service';
 import { UserService } from '../shared/services/user.service';
@@ -15,21 +16,22 @@ import { UserEditComponent } from '../user-edit/user-edit.component';
 /**
  * Diese Komponente implementiert die aktuelle Nutzeransicht.
  */
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit, OnDestroy {
 
-  user: User;
+  currentUser: User = null;
+  userSub: Subscription = null;
   isAdmin = true;
 
-  // TODO: save and destroy all subscribtions
 
   constructor(private auth: AuthService, private userService: UserService, private router: Router, public dialog: MatDialog) { }
+
 
   /**
    * Initialisiert den aktuellen Benutzer.
    */
   ngOnInit(): void {
-    this.auth.user.subscribe(user => {
-      this.user = user;
+    this.userSub = this.auth.user.subscribe(user => {
+      this.currentUser = user;
     },
       errorMessage => {
         console.log(errorMessage);
@@ -42,11 +44,7 @@ export class AccountComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(UserEditComponent, {
       width: '350px',
-      data: { firstName: this.user.firstName, lastName: this.user.lastName, email: this.user.email, accountLevel: this.user.accountLevel },
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      data: { firstName: this.currentUser.firstName, lastName: this.currentUser.lastName, email: this.currentUser.email, accountLevel: this.currentUser.accountLevel },
     });
   }
 
@@ -55,7 +53,7 @@ export class AccountComponent implements OnInit {
    */
   onDeleteAccount() {
     if (confirm('Möchtest du sicher den Account löschen?')) {
-      this.userService.deleteUser(this.user).subscribe(response => {
+      this.userService.deleteUser(this.currentUser).subscribe(response => {
         console.log(response);
         this.auth.logout();
         this.router.navigate(['/home']);
@@ -65,6 +63,13 @@ export class AccountComponent implements OnInit {
         });
     }
 
+  }
+
+  /**
+  * Beendet alle Subscriptions.
+  */
+  ngOnDestroy(): void {
+    this.userSub.unsubscribe();
   }
 
 

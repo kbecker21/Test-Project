@@ -9,6 +9,10 @@ import { AuthService } from '../shared/services/auth.service';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
+
+/**
+ * Diese Komponente implementiert Registrierung und Anmeldung.
+ */
 export class AuthComponent implements OnInit {
 
   isLoginMode = false;
@@ -20,8 +24,10 @@ export class AuthComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) { }
 
+  /**
+  * Initialisiert das Formular.
+  */
   ngOnInit(): void {
-
     this.route.data.subscribe(
       (data: Data) => {
         this.isLoginMode = data['isLoginMode'];
@@ -38,6 +44,9 @@ export class AuthComponent implements OnInit {
     });
   }
 
+  /**
+   * Sendet Formulardaten an den AuthService. 
+   */
   onSubmit() {
     if (!this.form.valid) {
       return;

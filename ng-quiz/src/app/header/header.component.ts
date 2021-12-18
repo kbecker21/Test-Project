@@ -7,6 +7,10 @@ import { AuthService } from '../shared/services/auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
+
+/**
+ * Diese Komponente implementiert das Kopfmenü.
+ */
 export class HeaderComponent implements OnInit {
   isAuthenticated = false;
   isAdmin = false;
@@ -26,10 +30,16 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  /**
+   * Meldet den aktuellen Benutzer ab.
+   */
   onLogout() {
     this.authService.logout();
   }
 
+  /**
+  * Beendet alle Subscriptions.
+  */
   ngOnDestroy() {
     this.userSub.unsubscribe();
   }
