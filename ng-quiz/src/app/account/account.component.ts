@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from '../shared/model/user.model';
 import { AuthService } from '../shared/services/auth.service';
-import { Controller, UserService } from '../shared/services/user.service';
+import { UserService } from '../shared/services/user.service';
 import { UserEditComponent } from '../user-edit/user-edit.component';
 
 @Component({
@@ -53,7 +53,7 @@ export class AccountComponent implements OnInit, OnDestroy {
    */
   onDeleteAccount() {
     if (confirm('Möchtest du sicher den Account löschen?')) {
-      this.userService.deleteUser(this.loggedInUser, this.loggedInUser.idUser, Controller.User).subscribe(response => {
+      this.userService.deleteUser(this.loggedInUser, this.loggedInUser.idUser).subscribe(response => {
         console.log(response);
         this.auth.logout();
         this.router.navigate(['/home']);

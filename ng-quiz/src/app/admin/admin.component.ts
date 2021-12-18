@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { User } from '../shared/model/user.model';
 import { Users } from '../shared/model/users.model';
 import { AuthService } from '../shared/services/auth.service';
-import { Controller, UserService } from '../shared/services/user.service';
+import { UserService } from '../shared/services/user.service';
 import { UserEditComponent } from '../user-edit/user-edit.component';
 
 @Component({
@@ -37,6 +37,10 @@ export class AdminComponent implements OnInit, OnDestroy {
       this.loggedInUser = user;
     });
 
+    this.initTable();
+  }
+
+  initTable() {
     this.allUsers = this.userService.getUsers(this.loggedInUser).subscribe(response => {
       this.dataSource = response;
     },
@@ -58,8 +62,8 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   onDelete(id: number) {
     if (confirm('Möchtest du sicher den Account löschen?')) {
-      this.userService.deleteUser(this.loggedInUser, id, Controller.User).subscribe(response => {
-        console.log(response);
+      this.userService.deleteUser(this.loggedInUser, id).subscribe(response => {
+        this.initTable();
       },
         errorMessage => {
           console.log(errorMessage);

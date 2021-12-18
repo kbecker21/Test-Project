@@ -9,11 +9,6 @@ import { AuthService } from './auth.service';
 // TODO: Bei Integration anpassen
 const URL = 'http://localhost:8000';
 
-export enum Controller {
-  User,
-  Me
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -76,12 +71,12 @@ export class UserService {
    * @param usedController genutzer Controller
    * @returns xxxxxxxxx
    */
-  updateUser(loggedInUser: User, user: User, usedController: Controller) {
+  updateUser(loggedInUser: User, user: User) {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + loggedInUser.token
     });
     return this.http.put<any>(
-      URL + '/' + usedController + '/' + user.idUser,
+      URL + '/user/' + user.idUser,
       {
         firstname: user.firstName,
         lastname: user.lastName,
@@ -98,13 +93,16 @@ export class UserService {
    * Löscht einen Benutzer.
    * @param loggedInUser eingeloggter User
    * @param userId Der Benutzer der gelöscht werden soll.
-   * @param usedController genutzer Controller
    * @returns xxxxxxxxx
    */
-  deleteUser(loggedInUser: User, userId: number, usedController: Controller) {
+  deleteUser(loggedInUser: User, userId: number) {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + loggedInUser.token
     });
+
+    // Wenn der eingeloggte User keine Adminrechte hat, wird eine andere Schnittstelle angesprochen. 
+    let usedController = loggedInUser.accountLevel === 5 ? 'user' : 'me'
+
     return this.http.delete<any>(URL + '/' + usedController + '/' + userId, { headers: headers }).pipe(
       catchError(this.handleError)
     );
