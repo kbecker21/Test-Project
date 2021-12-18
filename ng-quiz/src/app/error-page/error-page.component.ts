@@ -21,7 +21,7 @@ export class ErrorPageComponent implements OnInit, OnDestroy {
    * Initialisiert die Fehlermeldung.
    */
   ngOnInit(): void {
-    this.route.data.subscribe(
+    this.dataSub = this.route.data.subscribe(
       (data: Data) => {
         this.errorMessage = data['message'];
       }
