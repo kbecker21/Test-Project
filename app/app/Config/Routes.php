@@ -39,6 +39,11 @@ $routes->setAutoRoute(true);
 $routes->post('register', 'Register::index');
 $routes->post('login', 'Login::index');
 
+
+$routes->get('me', 'Me::index', ['filter' => 'authuser']);
+$routes->post('me/(:num)', 'Me::update/$1', ['filter' => 'authuser']);
+$routes->delete('me/(:num)', 'Me::delete/$1', ['filter' => 'authuser']);
+
 $routes->get('user', 'User::index', ['filter' => 'authadmin']);
 $routes->post('user', 'User::create', ['filter' => 'authadmin']);
 $routes->get('user/(:num)', 'User::show/$1', ['filter' => 'authadmin']);

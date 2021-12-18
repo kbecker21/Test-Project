@@ -42,6 +42,9 @@ class AuthUser implements FilterInterface {
  
         try {
             $decoded = JWT::decode($token, $key, array("HS256"));
+            $session = session();
+            $session->set('idUser', $decoded->idUser);
+
         } catch (Exception $ex) {
             $response = service('response');
             $response->setBody('Access denied');
@@ -62,8 +65,8 @@ class AuthUser implements FilterInterface {
      *
      * @return mixed
      */
-    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
-    {
-        //
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null) {
+        $session = session();
+        $session->destroy();
     }
 }
