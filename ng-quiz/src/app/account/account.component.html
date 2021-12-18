@@ -1,10 +1,10 @@
 <mat-card>
     <mat-card-title-group>
-        <mat-card-title>{{currentUser.firstName}} {{currentUser.lastName}}</mat-card-title>
-        <mat-card-subtitle>{{currentUser.accountLevel | accountLevelPipe}}</mat-card-subtitle>
+        <mat-card-title>{{loggedInUser.firstName}} {{loggedInUser.lastName}}</mat-card-title>
+        <mat-card-subtitle>{{loggedInUser.accountLevel | accountLevelPipe}}</mat-card-subtitle>
     </mat-card-title-group>
     <mat-card-content>
-        <p> <span class="glyphicon glyphicon-envelope"></span> {{currentUser.email}}</p>
+        <p> <span class="glyphicon glyphicon-envelope"></span> {{loggedInUser.email}}</p>
     </mat-card-content>
     <mat-card-actions>
         <button mat-icon-button color="primary" (click)="openDialog()">

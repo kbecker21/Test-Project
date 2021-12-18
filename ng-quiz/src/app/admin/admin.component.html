@@ -19,7 +19,7 @@
 
     <!-- AccountLevel Column -->
     <ng-container matColumnDef="accountLevel">
-        <mat-header-cell *matHeaderCellDef> Account Status </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.accountLevel | accountLevelPipe}} </mat-cell>
     </ng-container>
 
@@ -27,10 +27,10 @@
     <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef> Aktionen </mat-header-cell>
         <mat-cell *matCellDef="let element">
-            <button mat-icon-button color="primary" (click)="openDialog()">
+            <button mat-icon-button color="primary" (click)="openDialog(element)">
                 <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button color="warn">
+            <button mat-icon-button color="warn" (click)="onDelete(element.id)">
                 <mat-icon>delete</mat-icon>
             </button>
         </mat-cell>

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from '../shared/model/user.model';
 import { AuthService } from '../shared/services/auth.service';
-import { UserService } from '../shared/services/user.service';
+import { Controller, UserService } from '../shared/services/user.service';
 import { UserEditComponent } from '../user-edit/user-edit.component';
 
 @Component({
@@ -18,7 +18,7 @@ import { UserEditComponent } from '../user-edit/user-edit.component';
  */
 export class AccountComponent implements OnInit, OnDestroy {
 
-  currentUser: User = null;
+  loggedInUser: User = null;
   userSub: Subscription = null;
   isAdmin = true;
 
@@ -31,7 +31,7 @@ export class AccountComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.userSub = this.auth.user.subscribe(user => {
-      this.currentUser = user;
+      this.loggedInUser = user;
     },
       errorMessage => {
         console.log(errorMessage);
@@ -44,7 +44,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   openDialog(): void {
     const dialogRef = this.dialog.open(UserEditComponent, {
       width: '350px',
-      data: { firstName: this.currentUser.firstName, lastName: this.currentUser.lastName, email: this.currentUser.email, accountLevel: this.currentUser.accountLevel },
+      data: { firstName: this.loggedInUser.firstName, lastName: this.loggedInUser.lastName, email: this.loggedInUser.email, accountLevel: this.loggedInUser.accountLevel },
     });
   }
 
@@ -53,7 +53,7 @@ export class AccountComponent implements OnInit, OnDestroy {
    */
   onDeleteAccount() {
     if (confirm('Möchtest du sicher den Account löschen?')) {
-      this.userService.deleteUser(this.currentUser).subscribe(response => {
+      this.userService.deleteUser(this.loggedInUser, this.loggedInUser.idUser, Controller.User).subscribe(response => {
         console.log(response);
         this.auth.logout();
         this.router.navigate(['/home']);

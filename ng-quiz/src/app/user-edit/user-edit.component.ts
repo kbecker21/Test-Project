@@ -29,7 +29,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
   form: FormGroup;
 
   userSub: Subscription = null;
-  currentUser: User;
+  loggedInUser: User;
 
 
   constructor(
@@ -45,7 +45,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
   */
   ngOnInit(): void {
     this.userSub = this.auth.user.subscribe(user => {
-      this.currentUser = user;
+      this.loggedInUser = user;
     });
 
 
@@ -72,9 +72,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     console.log("submit");
 
-    this.userService.updateUser(this.currentUser).subscribe(response => {
-      console.log(response);
-    });
+    // this.userService.updateUser(this.loggedInUser).subscribe(response => {
+    //   console.log(response);
+    // });
   }
 
   /**

@@ -14,7 +14,7 @@
                 <mat-label>E-Mail</mat-label>
                 <input matInput id="email" class="form-control" formControlName="email">
             </mat-form-field>
-            <mat-form-field appearance="fill" *ngIf="currentUser.isAdmin()">
+            <mat-form-field appearance="fill" *ngIf="loggedInUser.isAdmin()">
                 <mat-label>Account Status</mat-label>
                 <input matInput id="accountlevel" class="form-control" formControlName="accountlevel">
             </mat-form-field>

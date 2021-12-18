@@ -2,22 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { User } from '../shared/model/user.model';
+import { Users } from '../shared/model/users.model';
 import { AuthService } from '../shared/services/auth.service';
-import { UserService } from '../shared/services/user.service';
+import { Controller, UserService } from '../shared/services/user.service';
 import { UserEditComponent } from '../user-edit/user-edit.component';
-
-export interface Users {
-  id: number,
-  firstName: string,
-  lastName: string,
-  email: string,
-  accountLevel: number
-}
-
-const USERS_DATA: Users[] = [
-  { id: 1, firstName: 'Kevin', lastName: 'Becker', email: 'kevin.becker@iubh-fernstudium.de', accountLevel: 3 },
-  { id: 2, firstName: 'Foo', lastName: 'Boo', email: 'foo.boo@iubh-fernstudium.de', accountLevel: 5 }
-];
 
 @Component({
   selector: 'app-admin',
@@ -30,11 +18,12 @@ const USERS_DATA: Users[] = [
  */
 export class AdminComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['firstName', 'lastName', 'email', 'accountLevel', 'actions'];
-  dataSource = USERS_DATA;
 
-  currentUser: User = null;
+  loggedInUser: User = null;
   userSub: Subscription = null;
   allUsers: Subscription = null;
+
+  dataSource: Users[] = [];
 
 
   constructor(private auth: AuthService, private userService: UserService, public dialog: MatDialog) { }
@@ -45,11 +34,11 @@ export class AdminComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.userSub = this.auth.user.subscribe(user => {
-      this.currentUser = user;
+      this.loggedInUser = user;
     });
 
-    this.allUsers = this.userService.getUsers(this.currentUser.token).subscribe(response => {
-      console.log(response);
+    this.allUsers = this.userService.getUsers(this.loggedInUser).subscribe(response => {
+      this.dataSource = response;
     },
       errorMessage => {
         console.log(errorMessage);
@@ -60,12 +49,23 @@ export class AdminComponent implements OnInit, OnDestroy {
   /**
   * Öffnet ein Dialogfenster mit den aktuellen Nutzerdaten.
   */
-  openDialog(): void {
+  openDialog(element: Users): void {
     const dialogRef = this.dialog.open(UserEditComponent, {
       width: '350px',
-      // TODO: Muss der aktuelle User aus der Liste eingetragen werden.....
-      data: { firstName: 'Test 1', lastName: 'Test L1', email: 'email@mail.de', accountLevel: 3 },
+      data: { firstName: element.firstName, lastName: element.lastName, email: element.email, accountLevel: element.accountLevel },
     });
+  }
+
+  onDelete(id: number) {
+    if (confirm('Möchtest du sicher den Account löschen?')) {
+      this.userService.deleteUser(this.loggedInUser, id, Controller.User).subscribe(response => {
+        console.log(response);
+      },
+        errorMessage => {
+          console.log(errorMessage);
+        });
+    }
+
   }
 
   /**
