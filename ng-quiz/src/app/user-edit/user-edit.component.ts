@@ -70,11 +70,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
    * Sendet Daten an Service.
    */
   onSubmit(): void {
-    console.log("submit");
-
-    // this.userService.updateUser(this.loggedInUser).subscribe(response => {
-    //   console.log(response);
-    // });
+    this.userService.updateUser(this.loggedInUser, this.loggedInUser).subscribe(response => {
+      console.log(response);
+    });
   }
 
   /**

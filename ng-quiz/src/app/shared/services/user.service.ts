@@ -75,8 +75,12 @@ export class UserService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + loggedInUser.token
     });
-    return this.http.put<any>(
-      URL + '/user/' + user.idUser,
+
+    // Wenn der eingeloggte User keine Adminrechte hat, wird eine andere Schnittstelle angesprochen. 
+    let usedController = loggedInUser.accountLevel === 5 ? 'user' : 'me'
+
+    return this.http.patch<any>(
+      URL + '/' + usedController + '/' + user.idUser,
       {
         firstname: user.firstName,
         lastname: user.lastName,
