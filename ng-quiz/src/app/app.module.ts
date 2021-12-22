@@ -31,6 +31,7 @@ import { UserEditComponent } from './user-edit/user-edit.component';
 import { AccountLevelPipe } from './shared/pipe/account-level.pipe';
 import { LobbyComponent } from './lobby/lobby.component';
 import { GameComponent } from './game/game.component';
+import { PoolComponent } from './pool/pool.component';
 
 
 
@@ -48,7 +49,8 @@ import { GameComponent } from './game/game.component';
     UserEditComponent,
     AccountLevelPipe,
     LobbyComponent,
-    GameComponent
+    GameComponent,
+    PoolComponent
   ],
   imports: [
     BrowserModule,

@@ -8,11 +8,11 @@ import { FaqComponent } from './faq/faq.component';
 import { GameComponent } from './game/game.component';
 import { HomeComponent } from './home/home.component';
 import { LobbyComponent } from './lobby/lobby.component';
+import { PoolComponent } from './pool/pool.component';
 import { RankingComponent } from './ranking/ranking.component';
 import { AuthGuard } from './shared/auth.guard';
 
 const ADMIN = 5;
-const TUTOR = 4;
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -22,6 +22,7 @@ const routes: Routes = [
   { path: 'faq', component: FaqComponent },
   { path: 'lobby', component: LobbyComponent, canActivate: [AuthGuard] },
   { path: 'game', component: GameComponent, canActivate: [AuthGuard] },
+  { path: 'pool', component: PoolComponent, canActivate: [AuthGuard] },
   { path: 'ranking', component: RankingComponent, canActivate: [AuthGuard] },
   { path: 'account', component: AccountComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { role: ADMIN } },
