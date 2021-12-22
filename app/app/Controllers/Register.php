@@ -9,13 +9,13 @@ class Register extends ResourceController {
     use ResponseTrait;
 
     public function index() {
-       /* helper(['form']);
+        helper(['form']);
+
         $rules = [
-            'email' => 'required|valid_email|is_unique[users.email]',
-            'password' => 'required|min_length[6]',
-            'confpassword' => 'matches[password]'
+            'email' => 'is_unique[user.Email]',
         ];
-        if(!$this->validate($rules)) return $this->fail($this->validator->getErrors()); */
+        
+        if(!$this->validate($rules)) return $this->respond(['error' => 'Email exists.'], 401); 
 
         $data = [
             'FirstName' => $this->request->getVar('firstname'),
