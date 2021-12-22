@@ -13,5 +13,6 @@
         <button mat-icon-button color="warn" (click)="onDeleteAccount()">
             <mat-icon>delete</mat-icon>
         </button>
+        <button mat-stroked-button routerLink="/admin" *ngIf="loggedInUser.isAdmin()">Benutzerverwaltung</button>
     </mat-card-actions>
 </mat-card>

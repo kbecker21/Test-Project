@@ -8,13 +8,11 @@
                     </div>
                     <ul class="nav navbar-nav">
                         <li routerLinkActive="active"><a routerLink="home">Home</a></li>
-                        <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="quiz">Quiz</a></li>
+                        <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="lobby">Lobby</a></li>
+                        <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="game">Game</a></li>
                         <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="pool">Fragen Pool</a>
                         </li>
                         <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="ranking">Rangliste</a>
-                        </li>
-                        <li routerLinkActive="active" *ngIf="isAuthenticated && isAdmin"><a
-                                routerLink="admin">Benutzerverwaltung</a>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

@@ -15,6 +15,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -27,6 +29,8 @@ import { AuthComponent } from './auth/auth.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { AccountLevelPipe } from './shared/pipe/account-level.pipe';
+import { LobbyComponent } from './lobby/lobby.component';
+import { GameComponent } from './game/game.component';
 
 
 
@@ -42,7 +46,9 @@ import { AccountLevelPipe } from './shared/pipe/account-level.pipe';
     AuthComponent,
     AdminComponent,
     UserEditComponent,
-    AccountLevelPipe
+    AccountLevelPipe,
+    LobbyComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +66,9 @@ import { AccountLevelPipe } from './shared/pipe/account-level.pipe';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    MatCheckboxModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

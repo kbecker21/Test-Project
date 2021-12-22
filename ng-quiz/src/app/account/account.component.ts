@@ -46,6 +46,7 @@ export class AccountComponent implements OnInit, OnDestroy {
     });
   }
 
+
   /**
    * Nach der Bestätigung wird der Nutzer gelöscht, ausgeloggt und auf die Startseite navigiert.
    */
