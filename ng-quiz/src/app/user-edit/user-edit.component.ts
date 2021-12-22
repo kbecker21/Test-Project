@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { User } from '../shared/model/user.model';
@@ -51,9 +50,6 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
     this.form = new FormGroup({
       'userData': new FormGroup({
-        'firstname': new FormControl(this.data.firstName),
-        'lastname': new FormControl(this.data.lastName),
-        'email': new FormControl(this.data.email, [Validators.required, Validators.email, Validators.pattern("^[A-Za-z0-9._%+-]+@iubh-fernstudium.de$")]),
         'accountlevel': new FormControl(this.data.accountLevel)
       })
     });

@@ -82,9 +82,6 @@ export class UserService {
     return this.http.patch<any>(
       URL + '/' + usedController + '/' + user.idUser,
       {
-        firstname: user.firstName,
-        lastname: user.lastName,
-        email: user.email,
         accountLevel: user.accountLevel
       }, { headers: headers }
     ).pipe(

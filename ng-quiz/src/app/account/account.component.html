@@ -7,7 +7,7 @@
         <p> <span class="glyphicon glyphicon-envelope"></span> {{loggedInUser.email}}</p>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-icon-button color="primary" (click)="openDialog()">
+        <button mat-icon-button color="primary" (click)="openDialog()" *ngIf="loggedInUser.isAdmin()">
             <mat-icon>edit</mat-icon>
         </button>
         <button mat-icon-button color="warn" (click)="onDeleteAccount()">

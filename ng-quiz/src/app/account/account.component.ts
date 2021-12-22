@@ -20,8 +20,6 @@ export class AccountComponent implements OnInit, OnDestroy {
 
   loggedInUser: User = null;
   userSub: Subscription = null;
-  isAdmin = true;
-
 
   constructor(private auth: AuthService, private userService: UserService, private router: Router, public dialog: MatDialog) { }
 
@@ -44,7 +42,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   openDialog(): void {
     const dialogRef = this.dialog.open(UserEditComponent, {
       width: '350px',
-      data: { firstName: this.loggedInUser.firstName, lastName: this.loggedInUser.lastName, email: this.loggedInUser.email, accountLevel: this.loggedInUser.accountLevel },
+      data: { accountLevel: this.loggedInUser.accountLevel },
     });
   }
 
