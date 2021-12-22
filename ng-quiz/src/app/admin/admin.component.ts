@@ -1,72 +1,83 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { User } from '../shared/model/user.model';
+import { Users } from '../shared/model/users.model';
 import { AuthService } from '../shared/services/auth.service';
 import { UserService } from '../shared/services/user.service';
 import { UserEditComponent } from '../user-edit/user-edit.component';
-
-export interface Users {
-  id: number,
-  firstName: string,
-  lastName: string,
-  email: string,
-  accountLevel: number
-}
-
-const USERS_DATA: Users[] = [
-  { id: 1, firstName: 'Kevin', lastName: 'Becker', email: 'kevin.becker@iubh-fernstudium.de', accountLevel: 3 },
-  { id: 2, firstName: 'Foo', lastName: 'Boo', email: 'foo.boo@iubh-fernstudium.de', accountLevel: 5 }
-];
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
+
+/**
+ *  Diese Komponente implementiert die Benutzerverwaltung.
+ */
 export class AdminComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['firstName', 'lastName', 'email', 'accountLevel', 'actions'];
-  dataSource = USERS_DATA;
 
-  currentUser: User = null;
+  loggedInUser: User = null;
   userSub: Subscription = null;
+  allUsers: Subscription = null;
+
+  dataSource: Users[] = [];
 
 
   constructor(private auth: AuthService, private userService: UserService, public dialog: MatDialog) { }
 
   /**
    * Initialisiert den aktuellen Benutzer.
+   * Initialisiert die Benutzerverwaltungs-Tabelle.
    */
   ngOnInit(): void {
     this.userSub = this.auth.user.subscribe(user => {
-      this.currentUser = user;
+      this.loggedInUser = user;
     });
+
+    this.initTable();
   }
 
-  onGetUsers() {
-    this.userService.getUsers(this.currentUser.token).subscribe(response => {
-      console.log(response);
+  initTable() {
+    this.allUsers = this.userService.getUsers(this.loggedInUser).subscribe(response => {
+      this.dataSource = response;
     },
       errorMessage => {
         console.log(errorMessage);
       });
   }
 
-  openDialog(): void {
+
+  /**
+  * Öffnet ein Dialogfenster mit den aktuellen Nutzerdaten.
+  */
+  openDialog(element: Users): void {
     const dialogRef = this.dialog.open(UserEditComponent, {
       width: '350px',
-      // TODO: Muss der aktuelle User aus der Liste eingetragen werden.....
-      data: { firstName: 'Test 1', lastName: 'Test L1', email: 'email@mail.de', accountLevel: 3 },
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      data: { accountLevel: element.accountLevel },
     });
   }
 
+  onDelete(id: number) {
+    if (confirm('Möchtest du sicher den Account löschen?')) {
+      this.userService.deleteUser(this.loggedInUser, id).subscribe(response => {
+        this.initTable();
+      },
+        errorMessage => {
+          console.log(errorMessage);
+        });
+    }
 
+  }
+
+  /**
+    * Beendet alle Subscriptions.
+    */
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
+    this.allUsers.unsubscribe();
   }
 
 

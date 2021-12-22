@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { User } from '../shared/model/user.model';
@@ -21,11 +20,15 @@ export interface DialogData {
   templateUrl: './user-edit.component.html',
   styleUrls: ['./user-edit.component.css']
 })
+
+/**
+ * Diese Komponente implementiert das Benutzer Formular. 
+ */
 export class UserEditComponent implements OnInit, OnDestroy {
   form: FormGroup;
 
   userSub: Subscription = null;
-  currentUser: User;
+  loggedInUser: User;
 
 
   constructor(
@@ -37,36 +40,40 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
   /**
   * Initialisiert den aktuellen Benutzer.
+  * Initialisiert das Formular.
   */
   ngOnInit(): void {
     this.userSub = this.auth.user.subscribe(user => {
-      this.currentUser = user;
+      this.loggedInUser = user;
     });
 
 
     this.form = new FormGroup({
       'userData': new FormGroup({
-        'firstname': new FormControl(this.data.firstName),
-        'lastname': new FormControl(this.data.lastName),
-        'email': new FormControl(this.data.email, [Validators.required, Validators.email, Validators.pattern("^[A-Za-z0-9._%+-]+@iubh-fernstudium.de$")]),
         'accountlevel': new FormControl(this.data.accountLevel)
       })
     });
   }
 
+  /**
+   * Abrechen der Eingabe. Schließt den Dialog.
+   */
   onCancel(): void {
     this.dialogRef.close();
   }
 
+  /**
+   * Sendet Daten an Service.
+   */
   onSubmit(): void {
-    console.log("submit");
-
-    this.userService.updateUser(this.currentUser).subscribe(response => {
+    this.userService.updateUser(this.loggedInUser, this.loggedInUser).subscribe(response => {
       console.log(response);
     });
   }
 
-
+  /**
+  * Beendet alle Subscriptions.
+  */
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
   }

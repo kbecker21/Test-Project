@@ -1,8 +1,9 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { User } from '../model/user.model';
+import { Users } from '../model/users.model';
 import { AuthService } from './auth.service';
 
 // TODO: Bei Integration anpassen
@@ -12,26 +13,16 @@ const URL = 'http://localhost:8000';
   providedIn: 'root'
 })
 
+
 /**
+ * Diese Komponente implementiert den UserService. 
  * Der Service stellt alle nötigen HTTP-Funktionen zum Abrufen, Bearbeiten und Löschen von Benutzern bereit.
  */
 export class UserService {
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
-  private handleError(errorRes: HttpErrorResponse) {
-    let errorMessage = 'An unknown error occurred!';
-    if (!errorRes.error || !errorRes.error.error) {
-      return throwError(errorMessage);
-    }
-    switch (errorRes.error.error.message) {
-      case 'Foo':
-        errorMessage = 'Foo';
-        break;
-    }
-    return throwError(errorMessage);
-  }
-
+  // TODO: erst fertigstellen bevor Kommentar.
   getUser(userId: number) {
     return this.http.get<any>(URL + '/user/' + userId).pipe(
       catchError(this.handleError)
@@ -43,30 +34,54 @@ export class UserService {
    * @param token Der Token vom aktuellen Nutzer.
    * @returns alle Nutzer aus dem System
    */
-  getUsers(token: String) {
+  getUsers(loggedInUser: User) {
     const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + token
+      'Authorization': 'Bearer ' + loggedInUser.token
     });
     return this.http.get<any>(URL + '/user', { headers: headers }).pipe(
-      catchError(this.handleError)
+      map(responseData => {
+        if (!responseData || !responseData.User)
+          return [];
+
+        const usersArray: Users[] = [];
+
+        responseData.User.forEach((user) => {
+          usersArray.push({
+            id: user.idUser,
+            firstName: user.FirstName,
+            lastName: user.LastName,
+            email: user.Email,
+            accountLevel: user.AccountLevel_idAccountLevel
+          });
+        });
+
+
+        return usersArray;
+      }),
+      catchError(errorRes => {
+        return throwError(errorRes);
+      })
     );
   }
 
   /**
    * Aktualisiert einen Benutzer.
+   * @param loggedInUser eingeloggter User
    * @param user Der Benutzer der aktualisiert werden soll.
+   * @param usedController genutzer Controller
    * @returns xxxxxxxxx
    */
-  updateUser(user: User) {
+  updateUser(loggedInUser: User, user: User) {
     const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + user.token
+      'Authorization': 'Bearer ' + loggedInUser.token
     });
-    return this.http.put<any>(
-      URL + '/user/' + user.idUser,
+
+    // Wenn der eingeloggte User keine Adminrechte hat, wird eine andere Schnittstelle angesprochen. 
+    let usedController = loggedInUser.accountLevel === 5 ? 'user' : 'me'
+
+    return this.http.patch<any>(
+      URL + '/' + usedController + '/' + user.idUser,
       {
-        firstname: user.firstName,
-        lastname: user.lastName,
-        email: user.email,
         accountLevel: user.accountLevel
       }, { headers: headers }
     ).pipe(
@@ -74,17 +89,42 @@ export class UserService {
     );
   }
 
+
   /**
    * Löscht einen Benutzer.
-   * @param user Der Benutzer der gelöscht werden soll.
+   * @param loggedInUser eingeloggter User
+   * @param userId Der Benutzer der gelöscht werden soll.
    * @returns xxxxxxxxx
    */
-  deleteUser(user: User) {
+  deleteUser(loggedInUser: User, userId: number) {
     const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + user.token
+      'Authorization': 'Bearer ' + loggedInUser.token
     });
-    return this.http.delete<any>(URL + '/user/' + user.idUser, { headers: headers }).pipe(
+
+    // Wenn der eingeloggte User keine Adminrechte hat, wird eine andere Schnittstelle angesprochen. 
+    let usedController = loggedInUser.accountLevel === 5 ? 'user' : 'me'
+
+    return this.http.delete<any>(URL + '/' + usedController + '/' + userId, { headers: headers }).pipe(
       catchError(this.handleError)
     );
+  }
+
+
+  /**
+   * Behandelt Fehlermeldungen
+   * @param errorRes Error
+   * @returns xxxxxxxxx
+   */
+  private handleError(errorRes: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred!';
+    if (!errorRes.error || !errorRes.error.error) {
+      return throwError(errorMessage);
+    }
+    switch (errorRes.error.error.message) {
+      case 'Foo':
+        errorMessage = 'Foo';
+        break;
+    }
+    return throwError(errorMessage);
   }
 }

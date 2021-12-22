@@ -1,13 +1,18 @@
 <mat-card>
     <mat-card-title-group>
-        <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
-        <mat-card-subtitle>{{user.accountLevel | accountLevelPipe}}</mat-card-subtitle>
+        <mat-card-title>{{loggedInUser.firstName}} {{loggedInUser.lastName}}</mat-card-title>
+        <mat-card-subtitle>{{loggedInUser.accountLevel | accountLevelPipe}}</mat-card-subtitle>
     </mat-card-title-group>
     <mat-card-content>
-        <p> <span class="glyphicon glyphicon-envelope"></span> {{user.email}}</p>
+        <p> <span class="glyphicon glyphicon-envelope"></span> {{loggedInUser.email}}</p>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-button (click)="openDialog()">Edit Account</button>
-        <button mat-button (click)="onDeleteAccount()">Delete Account</button>
+        <button mat-icon-button color="primary" (click)="openDialog()" *ngIf="loggedInUser.isAdmin()">
+            <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="onDeleteAccount()">
+            <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-stroked-button routerLink="/admin" *ngIf="loggedInUser.isAdmin()">Benutzerverwaltung</button>
     </mat-card-actions>
 </mat-card>

@@ -8,26 +8,24 @@
                     </div>
                     <ul class="nav navbar-nav">
                         <li routerLinkActive="active"><a routerLink="home">Home</a></li>
-                        <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="quiz">Quiz</a></li>
-                        <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="pool">Question Pool</a>
+                        <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="lobby">Lobby</a></li>
+                        <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="game">Game</a></li>
+                        <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="pool">Fragen Pool</a>
                         </li>
-                        <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="ranking">Ranking</a>
-                        </li>
-                        <li routerLinkActive="active" *ngIf="isAuthenticated && isAdmin"><a routerLink="admin">User
-                                administration</a>
+                        <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="ranking">Rangliste</a>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li routerLinkActive="active"><a routerLink="faq"><span
                                     class="glyphicon glyphicon-question-sign"></span> FAQ</a></li>
                         <li routerLinkActive="active" *ngIf="!isAuthenticated"><a routerLink="login"><span
-                                    class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                                    class="glyphicon glyphicon-log-in"></span> Anmelden</a></li>
                         <li *ngIf="isAuthenticated"><a style="cursor: pointer;" (click)="onLogout()"><span
-                                    class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                                    class="glyphicon glyphicon-log-out"></span> Abmelden</a></li>
                         <li routerLinkActive="active" *ngIf="!isAuthenticated"><a routerLink="register"><span
-                                    class=""></span> Sign Up</a></li>
+                                    class=""></span> Registrieren</a></li>
                         <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="account"><span
-                                    class="glyphicon glyphicon-user"></span> Account</a></li>
+                                    class="glyphicon glyphicon-user"></span> Profil</a></li>
                     </ul>
                 </div>
             </div>
