@@ -165,6 +165,9 @@ export class AuthService {
    */
   private handleError(errorRes: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
+    if (errorRes.error.error == 'Email exists.') {
+      errorMessage = 'E-Mail exisitert bereits.'
+    }
     return throwError(errorMessage);
   }
 

@@ -13,15 +13,13 @@ import { UserService } from '../shared/services/user.service';
   styleUrls: ['./lobby.component.css']
 })
 export class LobbyComponent implements OnInit {
-  displayedColumns: string[] = ['firstName', 'lastName', 'requestActions', 'replyActions'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'action'];
 
   loggedInUser: User = null;
   userSub: Subscription = null;
 
   allSearchUsers: Subscription = null;
   dataSource: Users[] = [];
-
-  searchForPlayers: boolean = false;
 
   constructor(private auth: AuthService, private userService: UserService, private lobbyService: LobbyService) { }
 
@@ -34,7 +32,6 @@ export class LobbyComponent implements OnInit {
   }
 
   initTable() {
-    // TODO: API anpassen für lobbyService.getSearchPlayers
     this.allSearchUsers = this.userService.getUsers(this.loggedInUser).subscribe(response => {
       this.dataSource = response;
     },
@@ -43,22 +40,15 @@ export class LobbyComponent implements OnInit {
       });
   }
 
-  onSendRequest(element: User): void {
+  onJoinGame(element: User): void {
+    // TODO: API anpassen für lobbyService.joinGame
     console.log(element);
   }
 
-  onAcceptRequest(element: User): void {
-    console.log(element);
+  onCreateGame() {
+
   }
 
-  onRejectRequest(element: User): void {
-    console.log(element);
-  }
 
-  onSearchForPlayers() {
-    this.searchForPlayers = !this.searchForPlayers;
-
-    // TODO: api für Tabelle
-  }
 
 }
