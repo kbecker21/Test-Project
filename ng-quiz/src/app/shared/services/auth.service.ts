@@ -168,6 +168,9 @@ export class AuthService {
     if (errorRes.error.error == 'Email exists.') {
       errorMessage = 'E-Mail exisitert bereits.'
     }
+    if (errorRes.error.error == 'Invalid username or password.') {
+      errorMessage = 'E-Mail und Passwort stimmen nicht überein.'
+    }
     return throwError(errorMessage);
   }
 
